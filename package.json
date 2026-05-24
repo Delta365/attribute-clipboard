@@ -6,10 +6,12 @@
   "scripts": {
     "build": "node build.mjs",
     "watch": "node build.mjs --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "rasterize-assets": "node assets/rasterize.mjs"
   },
   "devDependencies": {
     "@figma/plugin-typings": "^1.108.0",
+    "@resvg/resvg-js": "^2.6.2",
     "esbuild": "^0.24.0",
     "typescript": "^5.5.4"
   }

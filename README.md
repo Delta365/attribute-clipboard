@@ -9,7 +9,7 @@ frame, then reuse them on any other frame anytime. Group cards can be
 organized into folders by adding slashes in the name (e.g.
 `buttons/primary`).
 
-![Cover](assets/cover.svg)
+![Cover](assets/cover.png)
 
 ## Features
 
