@@ -1,5 +1,6 @@
 # Attribute Clipboard
 
+[![build](https://github.com/Delta365/attribute-clipboard/actions/workflows/build.yml/badge.svg)](https://github.com/Delta365/attribute-clipboard/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 A Figma plugin: a persistent clipboard for frame styles. Save fills,
