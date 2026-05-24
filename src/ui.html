@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Attribute Clipboard</title>
+    <!--STYLES-->
+  </head>
+  <body>
+    <header class="app-header">
+      <h1 class="app-title">Your attributes in one place</h1>
+      <ul class="intro">
+        <li>Capture a frame's styles (fills, strokes, effects, radius, opacity, blend mode).</li>
+        <li>Apply any saved group to other frames.</li>
+        <li>Expand a group to fine-tune which attributes get applied.</li>
+      </ul>
+      <button id="copy-btn" class="btn btn-primary" type="button" disabled>
+        <!-- Phosphor Copy (regular) -->
+        <svg
+          class="icon icon-16"
+          viewBox="0 0 256 256"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect x="40" y="72" width="144" height="144" rx="8" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+          <polyline points="72 40 216 40 216 184" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>Copy styles from selection</span>
+      </button>
+      <p id="selection-status" class="selection-status">Select a frame to begin.</p>
+    </header>
+
+    <main id="list" class="list" aria-label="Saved style entries"></main>
+
+    <section id="empty" class="empty" hidden>
+      <p class="empty-title">No styles saved yet</p>
+      <p class="empty-hint">
+        Select a frame in Figma and click <strong>Copy styles from selection</strong>.
+      </p>
+    </section>
+
+    <footer class="app-footer">
+      <span id="count" class="count"></span>
+      <button id="clear-btn" class="link-btn" type="button" hidden>Clear all</button>
+    </footer>
+
+    <!-- First-launch welcome popup. Hidden by default; shown via JS when the
+         sandbox reports the user hasn't dismissed it before. -->
+    <div
+      id="welcome-modal"
+      class="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="welcome-title"
+      hidden
+    >
+      <div class="modal">
+        <header class="modal-header">
+          <h2 id="welcome-title">Tip: organize with folders</h2>
+          <button
+            id="welcome-close"
+            class="icon-btn-24"
+            type="button"
+            aria-label="Close"
+          >
+            <!-- Phosphor X (regular) -->
+            <svg class="icon icon-16" viewBox="0 0 256 256" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+              <line x1="200" y1="56" x2="56" y2="200" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+              <line x1="200" y1="200" x2="56" y2="56" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </header>
+        <div class="modal-body">
+          <p>
+            Add a <code>/</code> in a group's name to nest it inside a folder.
+            Naming a group <code>buttons/primary</code> puts it under a folder
+            called <strong>buttons</strong>.
+          </p>
+          <p>
+            Folders nest as deep as you want, so
+            <code>ui/cards/elevated</code> creates a three-level tree.
+          </p>
+          <p>
+            You can rename folder headers later to restructure on the fly.
+          </p>
+        </div>
+        <footer class="modal-footer">
+          <button id="welcome-cta" class="btn btn-primary" type="button">
+            Got it
+          </button>
+        </footer>
+      </div>
+    </div>
+
+    <!--SCRIPT-->
+  </body>
+</html>

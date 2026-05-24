@@ -1,0 +1,36 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="128"
+  height="128"
+  viewBox="0 0 128 128"
+>
+  <!-- Plugin thumbnail: matches the cover's duotone language (solid orange +
+       softly-blurred translucent grey) and uses a stacked-rhombus / layered
+       layers mark, which reads as "this is a stack of saved styles". -->
+  <defs>
+    <filter id="soft-blur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" />
+    </filter>
+    <!-- Clip plate so any soft-blur halo stays inside the rounded square -->
+    <clipPath id="plate">
+      <rect width="128" height="128" rx="24" />
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#plate)">
+    <!-- Dark backdrop -->
+    <rect width="128" height="128" fill="#1F1F1F" />
+
+    <!-- Bottom layer — solid orange rhombus -->
+    <path d="M 26 78 L 64 60 L 102 78 L 64 96 Z" fill="#F5A847" />
+
+    <!-- Top layer — translucent, softly-blurred rhombus sitting above the
+         orange one. The overlap region creates the "stacked" depth. -->
+    <path
+      d="M 26 52 L 64 34 L 102 52 L 64 70 Z"
+      fill="#FFFFFF"
+      opacity="0.32"
+      filter="url(#soft-blur)"
+    />
+  </g>
+</svg>

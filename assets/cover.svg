@@ -1,0 +1,110 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1920"
+  height="960"
+  viewBox="0 0 1920 960"
+>
+  <!-- Cover composition:
+       Left half — type stack (title + tagline + 3 workflow bullets).
+       Right half — 3x2 grid of attribute icons, one per copyable property.
+       Style: solid orange shape + translucent / softly-blurred grey shape,
+       per the user-provided reference. Each icon visually maps to its
+       attribute (the form telegraphs the meaning). -->
+  <defs>
+    <!-- Soft blur for the translucent gray overlays -->
+    <filter id="soft-blur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" />
+    </filter>
+    <!-- Heavy blur for the "shadow" backdrop on the Effects icon -->
+    <filter id="heavy-blur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="14" />
+    </filter>
+  </defs>
+
+  <!-- Dark backdrop -->
+  <rect width="1920" height="960" fill="#1F1F1F" />
+
+  <!-- =========================================================
+       LEFT: title + tagline + workflow bullets
+       ========================================================= -->
+  <g transform="translate(120, 0)" font-family="Inter, system-ui, -apple-system, sans-serif">
+    <text x="0" y="360" font-size="120" font-weight="700" fill="#FFFFFF" letter-spacing="-3">
+      Attribute
+    </text>
+    <text x="0" y="490" font-size="120" font-weight="700" fill="#FFFFFF" letter-spacing="-3">
+      Clipboard
+    </text>
+
+    <text x="0" y="560" font-size="36" font-weight="400" fill="#A0A0A0">
+      Your attributes in one place.
+    </text>
+
+    <g font-size="24" font-weight="400" fill="#CCCCCC">
+      <text x="0" y="670">Save styles from any frame as a reusable group.</text>
+      <text x="0" y="710">Organize in folders by adding slashes in the name.</text>
+      <text x="0" y="750">Apply only the attributes you need.</text>
+    </g>
+  </g>
+
+  <!-- =========================================================
+       RIGHT: 3x2 attribute icon grid
+       Each cell is 220 wide (icon graphic) + 40 (label) tall, plus 40 px
+       gaps. Origin chosen so the grid is visually centered in the right
+       half (~960..1920) of the canvas.
+       ========================================================= -->
+  <g transform="translate(1070, 200)" font-family="Inter, system-ui, -apple-system, sans-serif">
+
+    <!-- ===== Row 1 ===== -->
+
+    <!-- FILL — solid orange square + translucent square overlap.
+         The fully-filled forms emphasize that fill = solid color. -->
+    <g transform="translate(0, 0)">
+      <rect x="40" y="60" width="110" height="110" rx="18" fill="#F5A847" />
+      <rect x="80" y="20" width="110" height="110" rx="18" fill="#FFFFFF" opacity="0.32" filter="url(#soft-blur)" />
+      <text x="110" y="240" text-anchor="middle" font-size="24" font-weight="500" fill="#A0A0A0">Fill</text>
+    </g>
+
+    <!-- STROKE — orange OUTLINE only (no fill) + translucent square overlap.
+         The hollow ring reads as "this is just the stroke". -->
+    <g transform="translate(260, 0)">
+      <rect x="40" y="60" width="110" height="110" rx="18" fill="none" stroke="#F5A847" stroke-width="14" />
+      <rect x="80" y="20" width="110" height="110" rx="18" fill="#FFFFFF" opacity="0.32" filter="url(#soft-blur)" />
+      <text x="110" y="240" text-anchor="middle" font-size="24" font-weight="500" fill="#A0A0A0">Stroke</text>
+    </g>
+
+    <!-- EFFECTS — orange square with a heavily-blurred translucent square
+         drifting underneath, reading as a drop shadow / effect. -->
+    <g transform="translate(520, 0)">
+      <rect x="50" y="80" width="130" height="130" rx="20" fill="#FFFFFF" opacity="0.35" filter="url(#heavy-blur)" />
+      <rect x="45" y="30" width="110" height="110" rx="18" fill="#F5A847" />
+      <text x="110" y="240" text-anchor="middle" font-size="24" font-weight="500" fill="#A0A0A0">Effects</text>
+    </g>
+
+    <!-- ===== Row 2 ===== -->
+
+    <!-- RADIUS — very-rounded orange square contrasted with a sharp
+         right-angle translucent square. The corner geometry IS the meaning. -->
+    <g transform="translate(0, 300)">
+      <rect x="40" y="60" width="110" height="110" rx="44" fill="#F5A847" />
+      <rect x="80" y="20" width="110" height="110" rx="0" fill="#FFFFFF" opacity="0.32" filter="url(#soft-blur)" />
+      <text x="110" y="240" text-anchor="middle" font-size="24" font-weight="500" fill="#A0A0A0">Radius</text>
+    </g>
+
+    <!-- OPACITY — two same-color, same-size circles side by side at
+         different alpha values. Reads as "this attribute IS the alpha". -->
+    <g transform="translate(260, 300)">
+      <circle cx="70" cy="100" r="45" fill="#F5A847" />
+      <circle cx="155" cy="100" r="45" fill="#F5A847" opacity="0.38" />
+      <text x="110" y="240" text-anchor="middle" font-size="24" font-weight="500" fill="#A0A0A0">Opacity</text>
+    </g>
+
+    <!-- BLEND — two overlapping circles in different colors with the
+         translucent one softly blurred. The overlap area IS the blend. -->
+    <g transform="translate(520, 300)">
+      <circle cx="80" cy="100" r="50" fill="#F5A847" />
+      <circle cx="140" cy="100" r="50" fill="#FFFFFF" opacity="0.5" filter="url(#soft-blur)" />
+      <text x="110" y="240" text-anchor="middle" font-size="24" font-weight="500" fill="#A0A0A0">Blend</text>
+    </g>
+
+  </g>
+</svg>

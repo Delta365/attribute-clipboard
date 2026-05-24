@@ -1,0 +1,602 @@
+/* Attribute Clipboard — UI styles.
+ *
+ * Design rules pinned in memory (apply to Figma plugins only):
+ *   - Typography: Inter Regular (400) + Medium (500), 12 px / 16 px line-height.
+ *     Hierarchy comes from weight and color, never size.
+ *   - Spacing: every length is a multiple of 2 px (1 px borders excepted).
+ *   - Icons: Phosphor (Regular). 16x16 default; 24x24 when the icon IS the
+ *     touch target with no adjacent text, or represents a flippable state.
+ *
+ * Color tokens come from Figma's themeColors API (--figma-color-*).
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Spacing — strictly even. Named by px value for readability. */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  /* Typography (single scale per memory rule) */
+  --font-size: 12px;
+  --line-height: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* `hidden` must always beat our display: flex/grid rules. */
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  font-weight: 400;
+  color: var(--figma-color-text);
+  background: var(--figma-color-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Icons ---------- */
+
+.icon {
+  display: block;
+  flex-shrink: 0;
+}
+.icon-16 {
+  width: 16px;
+  height: 16px;
+}
+.icon-24 {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------- App header ---------- */
+
+.app-header {
+  padding: var(--space-12);
+  border-bottom: 1px solid var(--figma-color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  flex-shrink: 0;
+}
+
+/* App title — explicit, one-off exception to the 12/16 type rule:
+ * the plugin's name reads as the page heading, which the rule's hierarchy
+ * (weight + color) alone can't carry. 14/16, Medium weight. */
+.app-title {
+  margin: 0;
+  /* Stacks with the header gap (8) for a total of 16 px down to the intro,
+   * matching the intro-to-button rhythm. */
+  margin-bottom: var(--space-8);
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+  color: var(--figma-color-text);
+}
+
+.intro {
+  margin: 0;
+  /* Extra breathing room before the Copy button — header gap is 8 px,
+   * this margin adds another 8 px for a total of 16 px to the button. */
+  margin-bottom: var(--space-8);
+  padding-left: var(--space-16);
+  list-style: disc;
+  color: var(--figma-color-text-secondary);
+}
+.intro li {
+  padding-left: var(--space-2);
+}
+.intro li + li {
+  margin-top: var(--space-2);
+}
+.intro li::marker {
+  color: var(--figma-color-icon-secondary);
+}
+
+.selection-status {
+  margin: 0;
+  color: var(--figma-color-text-secondary);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  font: inherit;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: var(--space-8) var(--space-12);
+  cursor: pointer;
+  transition: background-color 0.08s ease, border-color 0.08s ease;
+}
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn-primary {
+  background: var(--figma-color-bg-brand);
+  color: var(--figma-color-text-onbrand);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--figma-color-bg-brand-hover);
+}
+.btn-primary:active:not(:disabled) {
+  background: var(--figma-color-bg-brand-pressed);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  font: inherit;
+  color: var(--figma-color-text-secondary);
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.link-btn:hover {
+  color: var(--figma-color-text);
+}
+
+/* Icon-only button — 24x24 touch target per icon rules. */
+.icon-btn-24 {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--figma-color-icon-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: opacity 0.12s ease, background-color 0.08s ease, color 0.08s ease;
+}
+.icon-btn-24:hover {
+  background: var(--figma-color-bg-hover);
+  color: var(--figma-color-text);
+}
+
+/* ---------- List ---------- */
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+/* ---------- Folders (Figma variables-style hierarchy from "/" in names) ---------- */
+
+.folder {
+  display: block;
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-6) var(--space-8);
+  width: 100%;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  appearance: none;
+  font: inherit;
+  font-weight: 500;
+  color: var(--figma-color-text);
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+}
+.folder-header:hover {
+  background: var(--figma-color-bg-hover);
+}
+.folder-header:focus-visible {
+  outline: 2px solid var(--figma-color-border-selected, var(--figma-color-bg-brand));
+  outline-offset: -2px;
+}
+
+.folder-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--figma-color-icon-secondary);
+  transition: transform 0.15s ease, color 0.12s ease;
+}
+.folder-header:hover .folder-chevron {
+  color: var(--figma-color-icon);
+}
+.folder-header[aria-expanded="true"] .folder-chevron {
+  transform: rotate(90deg);
+  color: var(--figma-color-text);
+}
+
+/* Folder name is an <input> styled to look like inline text until the user
+ * focuses it. Mirrors the card .name affordance. */
+.folder-name {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-weight: 500;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-4);
+  margin: calc(-1 * var(--space-2)) calc(-1 * var(--space-4));
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.folder-name:hover {
+  border-color: var(--figma-color-border);
+  cursor: text;
+}
+.folder-name:focus {
+  outline: none;
+  border-color: var(--figma-color-border-strong);
+  background: var(--figma-color-bg);
+  cursor: text;
+}
+
+.folder-count {
+  flex-shrink: 0;
+  color: var(--figma-color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Body is the tree level below the header. Its padding-left indents the
+ * descendants; nested folder-bodies stack this naturally so depth = 2 ends
+ * up at 32 px, depth = 3 at 48 px, and so on. */
+.folder-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-12) 0 0 var(--space-16);
+}
+
+/* ---------- Group card ---------- */
+
+.group {
+  display: flex;
+  flex-direction: column;
+  background: var(--figma-color-bg);
+  border: 1px solid var(--figma-color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.group:hover {
+  border-color: var(--figma-color-border-strong);
+}
+
+/* The whole header acts as the accordion toggle. */
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-10);
+  cursor: pointer;
+  outline: none;
+}
+.group-header:focus-visible {
+  outline: 2px solid var(--figma-color-border-selected, var(--figma-color-bg-brand));
+  outline-offset: -2px;
+}
+
+.chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--figma-color-icon-secondary);
+  transition: transform 0.15s ease, color 0.12s ease;
+}
+.group-header:hover .chevron {
+  color: var(--figma-color-icon);
+}
+.group-header[aria-expanded="true"] .chevron {
+  transform: rotate(90deg);
+  color: var(--figma-color-text);
+}
+
+.thumb {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  background: var(--figma-color-bg-secondary);
+  border: 1px solid var(--figma-color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.group-title-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.name {
+  font: inherit;
+  font-weight: 500;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-4);
+  margin: calc(-1 * var(--space-2)) calc(-1 * var(--space-4));
+  width: calc(100% + var(--space-8));
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.name:hover {
+  border-color: var(--figma-color-border);
+  cursor: text;
+}
+.name:focus {
+  outline: none;
+  border-color: var(--figma-color-border-strong);
+  background: var(--figma-color-bg-secondary);
+  cursor: text;
+}
+
+.meta {
+  color: var(--figma-color-text-secondary);
+}
+
+/* Delete button — hidden until the card is hovered. */
+.delete-btn {
+  opacity: 0;
+}
+.group:hover .delete-btn,
+.delete-btn:focus-visible {
+  opacity: 1;
+}
+
+/* ---------- Body (collapsible) ---------- */
+
+.group-body {
+  border-top: 1px solid var(--figma-color-border);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3-column grid keeps the 6 attribute toggles in two compact rows
+ * (Fill / Stroke / Effects on top, Radius / Opacity / Blend below) instead
+ * of stacking vertically — saves about half the body height per card. */
+.checks {
+  padding: var(--space-8) var(--space-12);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8);
+}
+
+.mask-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  color: var(--figma-color-text-secondary);
+  cursor: pointer;
+  user-select: none;
+  min-width: 0;
+}
+.mask-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--figma-color-bg-brand);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.mask-row:has(input:checked) {
+  color: var(--figma-color-text);
+}
+
+/* ---------- Apply CTA (right-aligned in the card body footer) ---------- */
+
+.apply-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 var(--space-12) var(--space-12);
+}
+
+.apply-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: var(--space-8) var(--space-12);
+  cursor: pointer;
+  background: var(--figma-color-bg-brand);
+  color: var(--figma-color-text-onbrand);
+  transition: background-color 0.08s ease;
+}
+.apply-btn:hover:not(:disabled) {
+  background: var(--figma-color-bg-brand-hover);
+}
+.apply-btn:active:not(:disabled) {
+  background: var(--figma-color-bg-brand-pressed);
+}
+.apply-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* ---------- Empty / Footer ---------- */
+
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-24);
+  text-align: center;
+  color: var(--figma-color-text-secondary);
+  gap: var(--space-6);
+}
+.empty-title {
+  margin: 0;
+  font-weight: 500;
+  color: var(--figma-color-text);
+}
+.empty-hint {
+  margin: 0;
+  max-width: 260px;
+}
+
+.app-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-8) var(--space-12);
+  border-top: 1px solid var(--figma-color-border);
+  flex-shrink: 0;
+}
+
+.count {
+  color: var(--figma-color-text-secondary);
+}
+
+/* ---------- Welcome modal (first-launch only) ---------- */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-20);
+}
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.modal {
+  background: var(--figma-color-bg);
+  color: var(--figma-color-text);
+  border: 1px solid var(--figma-color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 380px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: var(--space-12) var(--space-16);
+  border-bottom: 1px solid var(--figma-color-border);
+  flex-shrink: 0;
+}
+.modal-header h2 {
+  margin: 0;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  font-weight: 500;
+}
+
+.modal-body {
+  padding: var(--space-16);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+.modal-body p {
+  margin: 0;
+  color: var(--figma-color-text);
+}
+.modal-body code {
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  font-size: var(--font-size);
+  background: var(--figma-color-bg-secondary);
+  border: 1px solid var(--figma-color-border);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-4);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-12) var(--space-16);
+  border-top: 1px solid var(--figma-color-border);
+  flex-shrink: 0;
+}
+
+/* Scrollbar — kept subtle so it doesn't compete with the cards. */
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+.list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.list::-webkit-scrollbar-thumb {
+  background: var(--figma-color-border);
+  border-radius: var(--radius-sm);
+}
+.list::-webkit-scrollbar-thumb:hover {
+  background: var(--figma-color-border-strong);
+}
